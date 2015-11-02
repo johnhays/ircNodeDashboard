@@ -36,38 +36,36 @@ See: [http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/](http://bl
 
 
 
-Installation {.western}
+Installation
 ------------
 
 1.  Download ircNodeDashboard.tgz (available in the Files section of the
-    Yahoo! Group
+    Yahoo! Group ircDDBGateway)
 
-2.  ircDDBGateway)
+2.  Make a directory for the server, e.g. /opt/webserver
 
-3.  Make a directory for the server, e.g. /opt/webserver
+3.  Unpack ircNodeDashboard.tgz into the directory
 
-4.  Unpack ircNodeDashboard.tgz into the directory
-
-5.  If ircNodeDashboard.tgz is in your home directory and the destination directory is /opt/webserver, the commands would be:
+4.  If ircNodeDashboard.tgz is in your home directory and the destination directory is /opt/webserver, the commands would be:
 
     **cd /opt/webserver**
     **tar xzvf \~/ircNodeDashboard.tgz**
 
-6.  Install needed libraries
+5.  Install needed libraries
     
     **npm install**
 
     (This will take some time, and there will be 'errors' for optional sub-components, you can ignore these warnings.)
 
-7.  Make sure no other webserver is running on port 80 (e.g. Apache)
+6.  Make sure no other webserver is running on port 80 (e.g. Apache)
 
-8.  Start up a test run in a terminal window
+7.  Start up a test run in a terminal window
     
     **node webserver.js**
     
-9.  Open a web browser and see if you see the webpage, if so then kill (Control-C) the program
+8.  Open a web browser and see if you see the webpage, if so then kill (Control-C) the program
 
-Running ircNodeDashboard {.western}
+Running ircNodeDashboard
 ------------------------
 
 In a terminal run
