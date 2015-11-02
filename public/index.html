@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet"
+	href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+<link rel="stylesheet" href="stylesheets/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet"
+	href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+<!--<![endif]-->
+
+<script src="/socket.io/socket.io.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+  var socket = io.connect(location.origin);
+  var lr = 0;
+  var rr = 0;
+  function gmap(lat,long) {
+  	return 'http://maps.google.com/maps?q=' + lat + ',' + long;
+  }
+  
+  function myDate(date,time) {
+  	var dtx = date.split('-');
+  	var ttx = time.split(':');
+  	var dt = new Date();
+  	dt.setUTCFullYear(dtx[0]);
+  	dt.setUTCMonth(dtx[1] - 1); // Months start at 0
+  	dt.setUTCDate(dtx[2]);
+  	dt.setUTCHours(ttx[0]);
+  	dt.setUTCMinutes(ttx[1]);
+  	dt.setUTCSeconds(ttx[2]);
+  	dt.setUTCMilliseconds(0);
+  	return dt.toLocaleString();
+  }
+
+  function checkRptCall(gw,rpt) {
+	var call;
+        if (typeof rpt === "undefined") {return gw; }
+        else { return (rpt.length < 1) ? gw : rpt; }
+  }
+
+  socket.on('config', function (config) {
+    console.log(JSON.stringify(config));
+    document.title = config.gatewayCallsign + " Dashboard";
+    $("#gatewayCALL").text(config.gatewayCallsign + " Gateway Dashboard");
+    $("#status tbody").remove();
+    $("#status").append("<tbody></tbody>");
+    if (config.ircddbEnabled) {
+    $("#status tbody").append("<tr><th>ircDDB Host</th><td>" + config.ircddbHostname + "</td></tr>");}
+    if (config.aprsEnabled) { 
+	$("#status tbody").append("<tr><th>APRS Host</th><td>" + config.aprsHostname + "</td></tr>");}   
+    if (config.ccsEnabled) { 
+	$("#status tbody").append("<tr><th>CCS Host</th><td>" + config.ccsHost + "</td></tr>");}   
+    var linkTypes = "";
+    if (config.ccsEnabled === "1") { linkTypes += "CCS "; }
+    if (config.dcsEnabled === "1") { linkTypes += "DCS "; }
+    if (config.dextraEnabled === "1") { linkTypes += "DExtra/XRF(" + config.dextraMaxDongles +" Max Dongles) " ; }
+    if (config.dextraEnabled === "1") { linkTypes += "DPlus/REF(" + config.dplusMaxDongles +" Max Dongles) " ; }
+    if (config.dratsEnabled === "1") { linkTypes += "DRATS "; }
+    if (config.dtmfEnabled === "1") { linkTypes += "DTMF "; }
+    if (config.echoEnabled === "1") { linkTypes += "ECHO "; }
+    if (config.infoEnabled === "1") { linkTypes += "INFO "; }
+    $('#linking p').remove();
+    $('#linking').append('<p>' + linkTypes + '</p>');
+        
+    $('#rptrs tbody').remove();
+    $('#rptrs').append('<tbody></tbody>'); 
+    if (! (typeof config.repeaterBand1 === "undefined1")) {
+    	var rptrCall1 = checkRptCall(config.gatewayCallsign,config.RepeaterCall1);
+    	var rptrStr1 = "<tr><td><a href='" 
+    		+ gmap(config.latitude1,config.longitude) 
+    		+ "' target='map'>" 
+    		+ rptrCall1 + "</a></td><td>" 
+    		+ config.repeaterBand1 
+    		+ "</td><td>" 
+    		+ config.frequency1 
+    		+ "</td><td>" 
+    		+ config.offset1 
+    		+ "</td><td>" 
+    		+ config.rangeKms1 
+    		+ "</td><td>"
+    		+ config.description1_1
+    		+ "</td><td>"
+    		+ config.description1_2    		
+    		+ "</td></tr>"
+    	$('#rptrs tbody').append(rptrStr1);
+    }
+    
+    if (! (typeof config.repeaterBand2 === "undefined")) {
+    	var rptrCall2 = checkRptCall(config.gatewayCallsign,config.RepeaterCall2);
+      	var rptrStr2 = "<tr><td><a href='" 
+    		+ gmap(config.latitude2,config.longitude2) 
+    		+ "' target='map'>" 
+    		+ rptrCall2 + "</a></td><td>" 
+    		+ config.repeaterBand2 
+    		+ "</td><td>" 
+    		+ config.frequency2 
+    		+ "</td><td>" 
+    		+ config.offset2 
+    		+ "</td><td>" 
+    		+ config.rangeKms2 
+    		+ "</td><td>"
+    		+ config.description2_1
+    		+ "</td><td>"
+    		+ config.description2_2  
+    		+ "</td></tr>"
+    	$('#rptrs tbody').append(rptrStr2);
+     }
+    
+    if (! (typeof config.repeaterBand3 === "undefined")) {
+    	var rptrCall3 = checkRptCall(config.gatewayCallsign,config.RepeaterCall3);
+    	var rptrStr3 = "<tr><td><a href='" 
+    		+ gmap(config.latitude3,config.longitude3) 
+    		+ "' target='map'>" 
+    		+ rptrCall3 + "</a></td><td>" 
+    		+ config.repeaterBand3 
+    		+ "</td><td>" 
+    		+ config.frequency3 
+    		+ "</td><td>" 
+    		+ config.offset3 
+    		+ "</td><td>" 
+    		+ config.rangeKms3 
+    		+ "</td><td>"
+    		+ config.description3_1
+    		+ "</td><td>"
+    		+ config.description3_2      		
+    		+ "</td></tr>"
+    	$('#rptrs tbody').append(rptrStr3);
+   }
+
+    if (! (typeof config.repeaterBand4 === "undefined")) {
+    	var rptrCall4 = checkRptCall(config.gatewayCallsign,config.RepeaterCall4);
+   	var rptrStr4 = "<tr><td><a href='" 
+    		+ gmap(config.latitude4,config.longitude4) 
+    		+ "' target='map'>" 
+    		+ rptrCall4 + "</a></td><td>" 
+    		+ config.repeaterBand4 
+    		+ "</td><td>" 
+    		+ config.frequency4 
+    		+ "</td><td>" 
+    		+ config.offset4 
+    		+ "</td><td>" 
+    		+ config.rangeKms4 
+    		+ "</td><td>"
+    		+ config.description4_1
+    		+ "</td><td>"
+    		+ config.description4_2  
+    		+ "</td></tr>"
+    	$('#rptrs tbody').append(rptrStr4);
+    }
+
+  });
+  
+  
+
+  socket.on('links', function(links) {
+    $('#links tbody').remove();
+    $('#links').append('<tbody></tbody>'); 	
+  	links.forEach(function (link) {
+    	var mydate = new Date(link.date + "T" + link.time);
+    	var ldate = myDate(link.date,link.time);
+    	var entry = "<tr><td>" + ldate + "</td><td>" + link.direction
+    		+ "</td><td>" + link.source + "</td><td>" + link.type + "</td>";
+    			
+  		if ("user" in link) {
+  			entry += "<td>" + link.user + "</td><td></td>";
+  		} else {
+  			entry += "<td>" + link.repeater + "</td><td>" + link.reflector + "</td>";
+  		}
+  		entry += "</tr>";
+  		$("#links tbody").append(entry);
+  	});
+    console.log("Links: \n" + JSON.stringify(links) + "\n\n");
+  });
+
+  socket.on('header', function (data) {
+    console.log("Incoming header: \n" + JSON.stringify(data) + "\n\n");
+
+
+    var mydate = new Date(data.date + "T" + data.time);
+    var ldate = myDate(data.date,data.time);
+    var newrec = "<tr><td>" 
+    	+ ldate + "</td><td>"
+    	+ data.source + "</td><td>"
+    	+ data.mycall + "/" + data.comment1 + "</td><td>"
+    	+ data.urcall + "</td><td>"
+    	+ data.rpt1 + "</td><td>"
+    	+ data.rpt2 + "</td></tr>";
+    
+    if (data.source === "Repeater") {    	
+   		 	if (++rr > 10) {
+    			$("#repeater tbody tr:first").remove();
+    		}
+    		$("#repeater tbody").append(newrec);
+    } else {
+    	  	if (++lr > 10) {
+    			$("#network tbody tr:first").remove();
+    		}
+    		$("#network tbody").append(newrec);
+    }
+    	
+//    socket.emit('my other event', { my: data });
+  });
+</script>
+</head>
+<body style="padding: 1 em;">
+	<h1 id="gatewayCALL"></h1>
+	<div class="pure-g">
+		<div class="pure-u-1">
+			<h3>Links</h3>
+			<table id="links" class="pure-table pure-table-bordered">
+				<thead>
+					<tr>
+						<th>Local Time</th>
+						<th>Direction</th>
+						<th>Protocol</th>
+						<th>Type</th>
+						<th>Repeater/User</th>
+						<th>Reflector</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<div id="linking"><h3>Supported Services and Commands</h3><p></p></div>
+		</div>
+		<div class="pure-u-1">
+			<h3>RF Activity</h3>
+			<table id="repeater" class="pure-table pure-table-bordered">
+				<thead>
+					<tr>
+						<th>Local Time</th>
+						<th>Source</th>
+						<th>From</th>
+						<th>To</th>
+						<th>Repeater 1</th>
+						<th>Repeater 2</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="pure-u-1">
+			<h3>Network Activity</h3>
+			<table id="network" class="pure-table pure-table-bordered">
+				<thead>
+					<tr>
+						<th>Local Time</th>
+						<th>Source</th>
+						<th>From</th>
+						<th>To</th>
+						<th>Repeater 1</th>
+						<th>Repeater 2</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="pure-u-1">
+			<h3>Repeater Modules</h3>
+			<table id="rptrs" class="pure-table pure-table-bordered">
+				<thead>
+					<tr>
+						<th>Callsign</th>
+						<th>Module</th>
+						<th>Frequency</th>
+						<th>Offset</th>
+						<th>Range KM</th>
+						<th colspan="2">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="pure-u-1">
+			<h3>Reporting Servers</h3>
+			<table id="status" class="pure-table pure-table-bordered">
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
+

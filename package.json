@@ -1,0 +1,18 @@
+{
+  "name": "webserver",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "start": "node webserver.js"
+  },
+  "dependencies": {
+    "express": "3.2.6",
+    "jade": "*",
+    "socket.io": "*",
+    "tail": "*"
+  },
+  "description": "ircDDBGateway Node Dashboard",
+  "main": "webserver.js",
+  "author": "John Hays, K7VE",
+  "license": "ISC"
+}
