@@ -21,7 +21,7 @@ This dashboard requires the installation of node.js, a framework to run server a
 
 A fairly recent version of node.js should be used v0.10.0 or newer should be sufficient. Due to limited availability of v4.0.0 or newer on ARM based computers like the Raspberry Pi, it has not been extensively tested on that platform.
 
-All testing has been on Linux based systems, mostly Raspbian and Ubuntu. It will likely run on Windows<sup id="a1">[1](#f1)</sup> or MacOS if the paths to configuration and log files are available.
+All testing has been on Linux based systems, mostly Raspbian and Ubuntu. It will likely run on Windows<sup id="a1">[1](#foot1)</sup> or MacOS if the paths to configuration and log files are available.
 
 The main **node.js** installation site is [https://nodejs.org/en/download/](https://nodejs.org/en/download/), with many Linux package manager installations documented at [https://github.com/nodejs/node-v0.x-archive/wiki/Installing-Node.js-via-package-manager](https://github.com/nodejs/node-v0.x-archive/wiki/Installing-Node.js-via-package-manager)
 
@@ -78,4 +78,4 @@ Note: Some distributions may install node as nodejs, if the node or forever comm
 
 You may want to create a script to start and stop the webserver and have it automatically restart on reboot.
 
-<b id="f1">1</b> Windows may be problematic due to configuration being held in the registry, though one could extract the registry data into a ircDDBGateway text configuration file or an industrious developer could modify **webserver.js** to populate the config object directly from the registry using a library like [https://www.npmjs.com/package/winreg](https://www.npmjs.com/package/winreg) - The author is not a fan of Windows for server applications, so he has not undertaken any work in this area.[↩](#a1)
+<b id='foot1'>1</b> Windows may be problematic due to configuration being held in the registry, though one could extract the registry data into a ircDDBGateway text configuration file or an industrious developer could modify **webserver.js** to populate the config object directly from the registry using a library like [https://www.npmjs.com/package/winreg](https://www.npmjs.com/package/winreg) - The author is not a fan of Windows for server applications, so he has not undertaken any work in this area.[↩](#a1)
