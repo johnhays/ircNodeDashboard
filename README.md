@@ -21,7 +21,7 @@ This dashboard requires the installation of node.js, a framework to run server a
 
 A fairly recent version of node.js should be used v0.10.0 or newer should be sufficient. Due to limited availability of v4.0.0 or newer on ARM based computers like the Raspberry Pi, it has not been extensively tested on that platform.
 
-All testing has been on Linux based systems, mostly Raspbian and Ubuntu. It will likely run on Windows<sup id="f1">[1](#f1)</sup> or MacOS if the paths to configuration and log files are available.
+All testing has been on Linux based systems, mostly Raspbian and Ubuntu. It will likely run on Windows<sup id="a1">[1](#f1)</sup> or MacOS if the paths to configuration and log files are available.
 
 The main **node.js** installation site is [https://nodejs.org/en/download/](https://nodejs.org/en/download/), with many Linux package manager installations documented at [https://github.com/nodejs/node-v0.x-archive/wiki/Installing-Node.js-via-package-manager](https://github.com/nodejs/node-v0.x-archive/wiki/Installing-Node.js-via-package-manager)
 
