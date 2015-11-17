@@ -38,11 +38,19 @@ Installation
 ------------
 
 1.  Download ircNodeDashboard.tgz (available in the Files section of the
-    Yahoo! Group ircDDBGateway)
+    Yahoo! Group ircDDBGateway) or use git (skip to step 3)
+
+    **git clone https://github.com/johnhays/ircNodeDashboard.git**
 
 2.  Make a directory for the server, e.g. /opt/webserver
 
-3.  Unpack ircNodeDashboard.tgz into the directory
+3.  Unpack ircNodeDashboard.tgz into the directory or or alternatively you download from github using
+    
+    **git clone https://github.com/johnhays/ircNodeDashboard.git**
+
+    **cd ircNodeDashboard**
+    
+    (and skip to step 5)
 
 4.  If ircNodeDashboard.tgz is in your home directory and the destination directory is /opt/webserver, the commands would be:
 
