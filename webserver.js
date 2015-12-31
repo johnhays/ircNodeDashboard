@@ -31,7 +31,7 @@ remove.forEach(function(token) {
 	delete config[token];
 });
 
-var server = http.createServer(app).listen(app.get('port'), function() {
+var server = http.createServer(app).listen(app.get('port'), '::', function() {
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
