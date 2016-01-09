@@ -3,7 +3,7 @@ ircDDBGateway “Node” Dashboard
 
 IrcDDBGateway node dashboard is a lightweight, real-time, self configuring dashboard for G4KLX's
 
-D-STAR gateway. Both the server and client are written JavaScript.
+D-STAR gateway. Both the server and client are written in JavaScript.
 Presentation is in a single index.html file with css styling.
 
 Adding local content to the webpage is simply a matter of editing the **index.html** file.
