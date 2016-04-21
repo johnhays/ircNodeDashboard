@@ -15,6 +15,7 @@ var p = '/var/log/opendv/Headers.log';
 
 app.use(express.static(__dirname + '/public'));
 app.set('port', '80');
+app.set('host', ''); // Set to '::' to include IPv6 or set to specific address if not wanted all interfaces
 
 var remove = [ 'ircddbUsername', 'ircddbPassword', 'remotePassword',
 		'remotePort' ];
@@ -31,7 +32,7 @@ remove.forEach(function(token) {
 	delete config[token];
 });
 
-var server = http.createServer(app).listen(app.get('port'), '::', function() {
+var server = http.createServer(app).listen(app.get('port'), app.get('host'), function() {
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
