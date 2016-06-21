@@ -54,8 +54,14 @@
     $("#status").append("<tbody></tbody>");
     if (config.ircddbEnabled) {
     $("#status tbody").append("<tr><th>ircDDB Host</th><td>" + config.ircddbHostname + "</td></tr>");}
+    if (config.ircddbEnabled2) {
+    $("#status tbody").append("<tr><th>ircDDB Host 2</th><td>" + config.ircddbHostname2 + "</td></tr>");}
+    if (config.ircddbEnabled3) {
+    $("#status tbody").append("<tr><th>ircDDB Host 3</th><td>" + config.ircddbHostname3 + "</td></tr>");}
+    if (config.ircddbEnabled4) {
+    $("#status tbody").append("<tr><th>ircDDB Host 4</th><td>" + config.ircddbHostname4 + "</td></tr>");}
     if (config.aprsEnabled) { 
-	$("#status tbody").append("<tr><th>APRS Host</th><td>" + config.aprsHostname + "</td></tr>");}   
+	$("#status tbody").append("<tr><th>APRS Host</th><td>" + config.aprsHostname + "</td></tr>");} 
     if (config.ccsEnabled) { 
 	$("#status tbody").append("<tr><th>CCS Host</th><td>" + config.ccsHost + "</td></tr>");}   
     var linkTypes = "";
