@@ -23,8 +23,10 @@ All testing has been on Linux based systems, mostly Raspbian and Ubuntu. It will
 
 The main **node.js** installation site is [https://nodejs.org/en/download/](https://nodejs.org/en/download/), with many Linux package manager installations documented at [https://github.com/nodejs/node-v0.x-archive/wiki/Installing-Node.js-via-package-manager](https://github.com/nodejs/node-v0.x-archive/wiki/Installing-Node.js-via-package-manager)
 
-(Raspberry Pi users probably want to use the directions for
-Debian/Ubuntu).
+Users of Raspbian Jesse or Compass Linux can simply install:
+
+**sudo apt-get update**
+**sudo apt-get install nodejs npm**
 
 Once **node.js** has been successfully installed, install the package forever.  
 
