@@ -37,7 +37,7 @@ See: [http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/](http://bl
 Installation
 ------------
 
-1.  Download the and unpack the zip file by selecting the button on https://github.com/johnhays/ircNodeDashboard or use git (skip to step 3)
+1.  Download the and unpack the zip file by selecting the button on https://github.com/johnhays/ircNodeDashboard or use git 
 
     **git clone https://github.com/johnhays/ircNodeDashboard.git**
 
