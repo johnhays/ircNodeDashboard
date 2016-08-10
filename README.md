@@ -26,6 +26,7 @@ The main **node.js** installation site is [https://nodejs.org/en/download/](http
 Users of Raspbian Jesse or Compass Linux can simply install:
 
 **sudo apt-get update**
+
 **sudo apt-get install nodejs npm**
 
 Once **node.js** has been successfully installed, install the package forever.  
