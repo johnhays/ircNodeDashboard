@@ -33,6 +33,8 @@ remove.forEach(function(token) {
 });
 
 var server = http.createServer(app).listen(app.get('port'), app.get('host'), function() {
+	process.setgid('opendv');
+        process.setuid('opendv');
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
