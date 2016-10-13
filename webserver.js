@@ -8,9 +8,9 @@ var currentNet = {};
 var currentRF = {};
 var dupes = 0;
 
-// Modify paths, if different
+// Modify paths, if different -- these should work for Compass Linux
 var LinkLOG = '/var/log/opendv/Links.log';
-var ircGW = '/etc/ircddbgateway';
+var ircGW = '/etc/opendv/ircddbgateway';
 var p = '/var/log/opendv/Headers.log';
 
 app.use(express.static(__dirname + '/public'));
