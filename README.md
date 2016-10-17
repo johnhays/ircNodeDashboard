@@ -34,13 +34,20 @@ Once **node.js** has been successfully installed, install the package forever.
 See: [http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/](http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/)
 
 
-
 Installation
 ------------
 
 1.  Download the and unpack the zip file by selecting the button on https://github.com/johnhays/ircNodeDashboard or use git 
 
     **git clone https://github.com/johnhays/ircNodeDashboard.git**
+    
+    If you used git:
+    
+    **cd ircNodeDashboard**
+    
+    If you use the zip file and uncompressed it:
+    
+    **cd ircNodeDashboard-master**
 
 2.  Install needed libraries
     
