@@ -10,7 +10,7 @@ Adding local content to the webpage is simply a matter of editing the **index.ht
 
 Additional html pages can be added to the 'public' folder.
 
-The dashboard will run on the computer where ircDDBGateway is installed.  **ircddbgateway must have been started on the computer, at least once before the dashboard will run, it is dependent on configuration and log files that are part of ircddbgateway in order to startup and run.**
+The dashboard will run on the computer where ircDDBGateway is installed.  **ircddbgateway must have been started on the computer, at least once, before the dashboard will run, as it is dependent on configuration and log files that are part of ircddbgateway in order to startup and run.**
 
 Preparation
 -----------
