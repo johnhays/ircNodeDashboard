@@ -39,6 +39,9 @@ Installation
 
 When installing the dashboard, you will probably want to run it from a system directory.  I typically create a directory of **/var/www-node** and perform the following under that directory.  I recommend the **git** install. If you haven't installed git:
 
+**sudo mkdir /var/www-node**
+**cd /var/www-node**
+
 **sudo apt-get install git**
 
 You may want to perform the steps as root, either by logging in or executing **sudo su -** but be very careful using this method because with superuser power, comes super responsibility.
