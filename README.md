@@ -67,7 +67,8 @@ You may want to perform the steps as root, either by logging in or executing **s
     
     **node webserver.js**
     
-5.  Open a web browser and see if you see the webpage, if so then kill (Control-C) the program
+5.  Open a web browser and see if you see the webpage using either http://localhost or http://**the ip address** (if you have been successful kill (Control-C) the program)
+
 
 Running ircNodeDashboard
 ------------------------
