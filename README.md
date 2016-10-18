@@ -8,7 +8,7 @@ Adding local content to the webpage is simply a matter of editing the **index.ht
 
 Additional html pages can be added to the 'public' folder.
 
-The dashboard will run on the computer where ircDDBGateway is installed.
+The dashboard will run on the computer where ircDDBGateway is installed.  **ircddbgateway must have been started on the computer, at least once before the dashboard will run, it is dependent on configuration and log files that are part of ircddbgateway in order to startup and run.**
 
 Preparation
 -----------
@@ -36,6 +36,12 @@ See: [http://blog.nodejitsu.com/keep-a-nodejs-server-up-with-forever/](http://bl
 
 Installation
 ------------
+
+When installing the dashboard, you will probably want to run it from a system directory.  I typically create a directory of **/var/www-node** and perform the following under that directory.  I recommend the **git** install. If you haven't installed git:
+
+**sudo apt-get install git**
+
+You may want to perform the steps as root, either by logging in or executing **sudo su -** but be very careful using this method because with superuser power, comes super responsibility.
 
 1.  Download the and unpack the zip file by selecting the button on https://github.com/johnhays/ircNodeDashboard or use git 
 
