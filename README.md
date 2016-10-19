@@ -73,6 +73,12 @@ Running ircNodeDashboard
 
 For a systemd unit setup see [https://github.com/johnhays/ircnode-support-files](https://github.com/johnhays/ircnode-support-files)
 
+To Do
+-----
+Modify to run as user opendv rather than root
+
+Notes
+-----
 
 Note: Some distributions may install node as nodejs, if the node or forever commands fail, you may need to navigate to the directory where nodejs is installed and create a soft link from node.
 
