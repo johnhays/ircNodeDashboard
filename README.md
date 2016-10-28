@@ -29,7 +29,7 @@ Users of Raspbian Jesse or Compass Linux can simply install:
 
 **sudo apt-get install nodejs npm**
 
-Once **node.js** has been successfully installed, and you are on a system that does not use systemd, install the package forever.  
+**Optional:** Once **node.js** has been successfully installed, and if you are on a system that does not use systemd, install the package forever.  
 
 **sudo npm install forever**
 
