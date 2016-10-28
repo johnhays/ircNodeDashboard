@@ -76,10 +76,10 @@ For a systemd unit setup see [https://github.com/johnhays/ircnode-support-files]
 Notes
 -----
 
-To enhance security this webserver runs as user opendv. Make sure you have such an account. It is possible to modify this behavior inside the webserver.js application.
-
-Note: Some distributions may install node as nodejs, if the node or forever commands fail, you may need to navigate to the directory where nodejs is installed and create a soft link from node. (On Raspbian Jesse and Compass, **cd /usr/bin** and run this command)
+Some distributions may install node as nodejs, if the node or forever commands fail, you may need to navigate to the directory where nodejs is installed and create a soft link from node. (On Raspbian Jesse and Compass, **cd /usr/bin** and run this command)
 
 **sudo ln -s nodejs node**
+
+To enhance security this webserver runs as user opendv. Make sure you have such an account. It is possible to modify this behavior inside the webserver.js application.
 
 <b id='foot1'>1</b> Windows may be problematic due to configuration being held in the registry, though one could extract the registry data into a ircDDBGateway text configuration file or an industrious developer could modify **webserver.js** to populate the config object directly from the registry using a library like [https://www.npmjs.com/package/winreg](https://www.npmjs.com/package/winreg) - The author is not a fan of Windows for server applications, so he has not undertaken any work in this area.[↩](#a1)
