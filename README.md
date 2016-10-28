@@ -59,7 +59,7 @@ When installing the dashboard, you will probably want to run it from a system di
 
     (This will take some time, and there will be 'errors' for optional sub-components, you can ignore these warnings.)
 
-3.  Make sure no other webserver is running on port 80 (e.g. Apache)
+3.  Make sure no other webserver is running on port 80 (e.g. Apache). If you need to run the dashboard on a different port, you can modify **webserver.js** to change the port number.
 
 4.  Start up a test run in a terminal window (see note below, this command does not execute).
     
