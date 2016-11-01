@@ -55,7 +55,7 @@ When installing the dashboard, you will probably want to run it from a system di
 
 2.  Install needed libraries
     
-    **npm install**
+    **sudo npm install**
 
     (This will take some time, and there will be 'errors' for optional sub-components, you can ignore these warnings.)
 
