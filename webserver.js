@@ -171,6 +171,7 @@ io.on('connection', function(socket) {
 				stats['loadavg'] = line;
 	                }
 	        });
+// This section could be commented out if temp is not available at the indicated file location
 	        fs.readFileSync("/sys/class/thermal/thermal_zone0/temp").toString().split('\n')
 	        .forEach(function(line) {
 	                if (line.trim().length > 0) {
@@ -182,6 +183,9 @@ io.on('connection', function(socket) {
 				stats['cputemp'] = centigrade + "C " + fahrenheit + "F";
 	                }
 	        });
+// end temp section
+
+
 		socket.emit('stats', stats);
 //		console.log(stats);
 	},statseconds);

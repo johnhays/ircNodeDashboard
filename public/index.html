@@ -169,8 +169,12 @@
     $('#stats tbody').remove();
     $('#stats').append('<tbody></tbody>');
     var entry = "<tr><th>Uptime (Days HH:MM:SS)</th><td>" + stats.uptime + "</td>\n" +
-	"<tr><th>Load Average</th><td>" + stats.loadavg + "</td>\n" +
-	"<tr><th>CPU Temperature</th><td>" + stats.cputemp + "</td></tr>\n";
+	"<tr><th>Load Average</th><td>" + stats.loadavg + "</td>\n";
+	if (stats.cputemp)
+	{
+		entry += "<tr><th>CPU Temperature</th><td>" + stats.cputemp + "</td>\n";
+	}
+	entry += "</tr>\n";
     $('#stats tbody').append(entry);
     // console.log(stats);
   });
