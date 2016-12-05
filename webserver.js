@@ -6,15 +6,18 @@ var linkptr = 0;
 var rfptr = 0;
 var currentNet = {};
 var currentRF = {};
+var stats = {};
 var dupes = 0;
+var statseconds = 10 * 1000;  // Set number of seconds between updating CPU stats times 1000;
 
 // Modify paths, if different
 var LinkLOG = '/var/log/opendv/Links.log';
-var ircGW = '/etc/ircddbgateway';
-var p = '/var/log/opendv/Headers.log';
+var ircGW = '/etc/opendv/ircddbgateway';
+var headers = '/var/log/opendv/Headers.log';
 
 app.use(express.static(__dirname + '/public'));
 app.set('port', '80');
+app.set('host', ''); // Set to '::' to include IPv6 or set to specific address if not wanted on all interfaces
 
 var remove = [ 'ircddbUsername', 'ircddbPassword', 'remotePassword',
 		'remotePort' ];
@@ -31,13 +34,15 @@ remove.forEach(function(token) {
 	delete config[token];
 });
 
-var server = http.createServer(app).listen(app.get('port'), '::', function() {
+var server = http.createServer(app).listen(app.get('port'), app.get('host'), function() {
+	process.setgid('opendv');
+	process.setuid('opendv');
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
 var io = require('socket.io')(server);
 
-var rptlog = new Tail(p);
+var rptlog = new Tail(headers);
 
 function trimBetween(str, before, after) {
 	var left = str.indexOf(before) + before.length;
@@ -131,10 +136,61 @@ function parseLogLine(line) {
 	return rec;
 }
 
+var SecondsTohhmmss = function(totalSeconds) {
+        var days    = Math.floor(totalSeconds / 86400);
+        var used    = days * 86400;
+        var hours   = Math.floor((totalSeconds - used) / 3600);
+        used        += hours * 3600;
+        var minutes = Math.floor((totalSeconds - used) / 60);
+        used        += minutes * 60;
+        var seconds = totalSeconds - used;
+
+        seconds = Math.floor(seconds);
+
+        var result = days;
+        result += " " + (hours < 10 ? "0" + hours : hours);
+        result += ":" + (minutes < 10 ? "0" + minutes : minutes);
+        result += ":" + (seconds  < 10 ? "0" + seconds : seconds);
+        return result;
+}
+
+
 io.on('connection', function(socket) {
+
+	setInterval(function() {
+	        fs.readFileSync("/proc/uptime").toString().split('\n')
+	        .forEach(function(line) {
+	                if (line.trim().length > 0) {
+	                        var timex = line.split(" ");
+				stats['uptime'] = SecondsTohhmmss(timex[0]);
+	                }
+	        });
+	        fs.readFileSync("/proc/loadavg").toString().split('\n')
+	        .forEach(function(line) {
+	                if (line.trim().length > 0) {
+				stats['loadavg'] = line;
+	                }
+	        });
+	        fs.readFileSync("/sys/class/thermal/thermal_zone0/temp").toString().split('\n')
+	        .forEach(function(line) {
+	                if (line.trim().length > 0) {
+	                        var temps = line.split(" ");
+	                        var centigrade = temps[0] / 1000;
+	                        var fahrenheit = (centigrade * 1.8) + 32;
+	                        centigrade = Math.round(centigrade * 100) / 100;
+	                        fahrenheit = Math.round(fahrenheit * 100) / 100;
+				stats['cputemp'] = centigrade + "C " + fahrenheit + "F";
+	                }
+	        });
+		socket.emit('stats', stats);
+//		console.log(stats);
+	},statseconds);
+
+
 
 	socket.emit('config', config);
 	socket.emit('links', links);
+
 
 	rfact.sort(orderDS).forEach(function(act) {
 		if (act !== null) {

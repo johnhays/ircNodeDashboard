@@ -54,6 +54,12 @@
     $("#status").append("<tbody></tbody>");
     if (config.ircddbEnabled) {
     $("#status tbody").append("<tr><th>ircDDB Host</th><td>" + config.ircddbHostname + "</td></tr>");}
+    if (config.ircddbEnabled2) {
+    $("#status tbody").append("<tr><th>ircDDB Host 2</th><td>" + config.ircddbHostname2 + "</td></tr>");}
+    if (config.ircddbEnabled3) {
+    $("#status tbody").append("<tr><th>ircDDB Host 3</th><td>" + config.ircddbHostname3 + "</td></tr>");}
+    if (config.ircddbEnabled4) {
+    $("#status tbody").append("<tr><th>ircDDB Host 4</th><td>" + config.ircddbHostname4 + "</td></tr>");}
     if (config.aprsEnabled) { 
 	$("#status tbody").append("<tr><th>APRS Host</th><td>" + config.aprsHostname + "</td></tr>");}   
     if (config.ccsEnabled) { 
@@ -159,6 +165,15 @@
   });
   
   
+  socket.on('stats', function(stats) {
+    $('#stats tbody').remove();
+    $('#stats').append('<tbody></tbody>');
+    var entry = "<tr><th>Uptime (Days HH:MM:SS)</th><td>" + stats.uptime + "</td>\n" +
+	"<tr><th>Load Average</th><td>" + stats.loadavg + "</td>\n" +
+	"<tr><th>CPU Temperature</th><td>" + stats.cputemp + "</td></tr>\n";
+    $('#stats tbody').append(entry);
+    // console.log(stats);
+  });
 
   socket.on('links', function(links) {
     $('#links tbody').remove();
@@ -285,6 +300,12 @@
 		<div class="pure-u-1">
 			<h3>Reporting Servers</h3>
 			<table id="status" class="pure-table pure-table-bordered">
+				<tbody></tbody>
+			</table>
+		</div>
+		<div class="pure-u-1">
+			<h3>CPU Status</h3>
+			<table id="stats" class="pure-table pure-table-bordered">
 				<tbody></tbody>
 			</table>
 		</div>
