@@ -10,10 +10,14 @@ var stats = {};
 var dupes = 0;
 var statseconds = 10 * 1000;  // Set number of seconds between updating CPU stats times 1000;
 
-// Modify paths, if different
+// Modify paths, if different -- these should work for Compass Linux
 var LinkLOG = '/var/log/opendv/Links.log';
 var ircGW = '/etc/opendv/ircddbgateway';
+<<<<<<< HEAD
 var headers = '/var/log/opendv/Headers.log';
+=======
+var p = '/var/log/opendv/Headers.log';
+>>>>>>> 6fc247888ccd40b0d3dba2c7e7c09bad56236274
 
 app.use(express.static(__dirname + '/public'));
 app.set('port', '80');
@@ -36,7 +40,11 @@ remove.forEach(function(token) {
 
 var server = http.createServer(app).listen(app.get('port'), app.get('host'), function() {
 	process.setgid('opendv');
+<<<<<<< HEAD
 	process.setuid('opendv');
+=======
+        process.setuid('opendv');
+>>>>>>> 6fc247888ccd40b0d3dba2c7e7c09bad56236274
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
