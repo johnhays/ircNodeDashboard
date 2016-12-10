@@ -1,17 +1,22 @@
+How to Install lm-sensors Version
+=================================
+**By Kenny Richards, KU7M**
+
 The ircDashboard is a node.js dashboard written by John Hays - K7VE. This is a great little dashboard if you are running the ircDDBGateway server and the latest version includes some system level information, including CPU temperature. The method John gets the current CPU temperature works great on a Raspberry Pi, but is problematic on a more standard platform. Since I run ircDDBGateway on an Intel based system, I figured out an alternative solution for getting CPU temperature using the lm-sensors application. The following steps have been tested on a Ubuntu 15.10 system and I believe should work on just about any standard linux host, just adapt the installation to the included package management.
 
-Step 1: Install lm-sensors
+##Step 1: Install lm-sensors
 
 Using apt-get, update the catalog and then install the lm-sensors package.
-	$ sudo apt-get update
-	$ sudo apt-get install lm-sensors
+
+**sudo apt-get update**
+**sudo apt-get install lm-sensors**
 	
 Once this is finished, assuming there were no errors, you should be able to call the 'sensors' application from the command line. 
-	$ sensors
+
+**sensors**
 	
 The output will differ based on your particular motherboard and what options are available, but the default "coretemp-isa-0000" values should be displayed. Here is what mine looks like:
 
-kennyr@w7rnk:~$ sensors
 coretemp-isa-0000
 Adapter: ISA adapter
 Core 0:       +42.0°C  (crit = +100.0°C)
@@ -39,17 +44,17 @@ cpu0_vid:    +0.000 V
 intrusion0:  ALARM
 
 
-Step 2: Install sensors.js
+##Step 2: Install sensors.js
 
 The next step is to add the node.js package which provides support for parsing the output of the sensors application for the dashboard. This is pretty simple if you already have node.js installed and working for ircDashboard.
 
-	$ sudo npm install sensors.js
+**sudo npm install sensors.js**
 	
-Step 3: Replace default webserver.js with modified version to use lm-sensors.
+##Step 3: Replace default webserver.js with modified version to use lm-sensors.
 
-	$ cd /var/www-node/ircNodeDashboard
-	$ sudo mv webserver.js webserver-pi.js
-	$ sudo mv webserver-lm.js webserver.js
+**cd /var/www-node/ircNodeDashboard**
+**sudo mv webserver.js webserver-pi.js**
+**sudo mv webserver-lm.js webserver.js**
 	
 Restart webserver.js
 	
