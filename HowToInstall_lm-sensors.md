@@ -47,5 +47,9 @@ The next step is to add the node.js package which provides support for parsing t
 	
 Step 3: Replace default webserver.js with modified version to use lm-sensors.
 
-	//need to put in directions for installing alternative version.
+	$ cd /var/www-node/ircNodeDashboard
+	$ sudo mv webserver.js webserver-pi.js
+	$ sudo mv webserver-lm.js webserver.js
+	
+Restart webserver.js
 	
