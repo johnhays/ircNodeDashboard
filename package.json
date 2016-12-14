@@ -9,7 +9,8 @@
     "express": "3.2.6",
     "jade": "*",
     "socket.io": "*",
-    "tail": "*"
+    "tail": "*",
+    "touch": "*"
   },
   "description": "ircDDBGateway Node Dashboard",
   "main": "webserver.js",

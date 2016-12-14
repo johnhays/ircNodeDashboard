@@ -19,214 +19,295 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
-  var socket = io.connect(location.origin);
-  var lr = 0;
-  var rr = 0;
-  function gmap(lat,long) {
-  	return 'http://maps.google.com/maps?q=' + lat + ',' + long;
-  }
-  
-  function myDate(date,time) {
-  	var dtx = date.split('-');
-  	var ttx = time.split(':');
-  	var dt = new Date();
-  	dt.setUTCFullYear(dtx[0]);
-  	dt.setUTCMonth(dtx[1] - 1); // Months start at 0
-  	dt.setUTCDate(dtx[2]);
-  	dt.setUTCHours(ttx[0]);
-  	dt.setUTCMinutes(ttx[1]);
-  	dt.setUTCSeconds(ttx[2]);
-  	dt.setUTCMilliseconds(0);
-  	return dt.toLocaleString();
-  }
-
-  function checkRptCall(gw,rpt) {
-	var call;
-        if (typeof rpt === "undefined") {return gw; }
-        else { return (rpt.length < 1) ? gw : rpt; }
-  }
-
-  socket.on('config', function (config) {
-    console.log(JSON.stringify(config));
-    document.title = config.gatewayCallsign + " Dashboard";
-    $("#gatewayCALL").text(config.gatewayCallsign + " Gateway Dashboard");
-    $("#status tbody").remove();
-    $("#status").append("<tbody></tbody>");
-    if (config.ircddbEnabled) {
-    $("#status tbody").append("<tr><th>ircDDB Host</th><td>" + config.ircddbHostname + "</td></tr>");}
-    if (config.ircddbEnabled2) {
-    $("#status tbody").append("<tr><th>ircDDB Host 2</th><td>" + config.ircddbHostname2 + "</td></tr>");}
-    if (config.ircddbEnabled3) {
-    $("#status tbody").append("<tr><th>ircDDB Host 3</th><td>" + config.ircddbHostname3 + "</td></tr>");}
-    if (config.ircddbEnabled4) {
-    $("#status tbody").append("<tr><th>ircDDB Host 4</th><td>" + config.ircddbHostname4 + "</td></tr>");}
-    if (config.aprsEnabled) { 
-	$("#status tbody").append("<tr><th>APRS Host</th><td>" + config.aprsHostname + "</td></tr>");} 
-    if (config.ccsEnabled) { 
-	$("#status tbody").append("<tr><th>CCS Host</th><td>" + config.ccsHost + "</td></tr>");}   
-    var linkTypes = "";
-    if (config.ccsEnabled === "1") { linkTypes += "CCS "; }
-    if (config.dcsEnabled === "1") { linkTypes += "DCS "; }
-    if (config.dextraEnabled === "1") { linkTypes += "DExtra/XRF(" + config.dextraMaxDongles +" Max Dongles) " ; }
-    if (config.dextraEnabled === "1") { linkTypes += "DPlus/REF(" + config.dplusMaxDongles +" Max Dongles) " ; }
-    if (config.dratsEnabled === "1") { linkTypes += "DRATS "; }
-    if (config.dtmfEnabled === "1") { linkTypes += "DTMF "; }
-    if (config.echoEnabled === "1") { linkTypes += "ECHO "; }
-    if (config.infoEnabled === "1") { linkTypes += "INFO "; }
-    $('#linking p').remove();
-    $('#linking').append('<p>' + linkTypes + '</p>');
-        
-    $('#rptrs tbody').remove();
-    $('#rptrs').append('<tbody></tbody>'); 
-    if (! (typeof config.repeaterBand1 === "undefined1")) {
-    	var rptrCall1 = checkRptCall(config.gatewayCallsign,config.RepeaterCall1);
-    	var rptrStr1 = "<tr><td><a href='" 
-    		+ gmap(config.latitude1,config.longitude) 
-    		+ "' target='map'>" 
-    		+ rptrCall1 + "</a></td><td>" 
-    		+ config.repeaterBand1 
-    		+ "</td><td>" 
-    		+ config.frequency1 
-    		+ "</td><td>" 
-    		+ config.offset1 
-    		+ "</td><td>" 
-    		+ config.rangeKms1 
-    		+ "</td><td>"
-    		+ config.description1_1
-    		+ "</td><td>"
-    		+ config.description1_2    		
-    		+ "</td></tr>"
-    	$('#rptrs tbody').append(rptrStr1);
-    }
-    
-    if (! (typeof config.repeaterBand2 === "undefined")) {
-    	var rptrCall2 = checkRptCall(config.gatewayCallsign,config.RepeaterCall2);
-      	var rptrStr2 = "<tr><td><a href='" 
-    		+ gmap(config.latitude2,config.longitude2) 
-    		+ "' target='map'>" 
-    		+ rptrCall2 + "</a></td><td>" 
-    		+ config.repeaterBand2 
-    		+ "</td><td>" 
-    		+ config.frequency2 
-    		+ "</td><td>" 
-    		+ config.offset2 
-    		+ "</td><td>" 
-    		+ config.rangeKms2 
-    		+ "</td><td>"
-    		+ config.description2_1
-    		+ "</td><td>"
-    		+ config.description2_2  
-    		+ "</td></tr>"
-    	$('#rptrs tbody').append(rptrStr2);
-     }
-    
-    if (! (typeof config.repeaterBand3 === "undefined")) {
-    	var rptrCall3 = checkRptCall(config.gatewayCallsign,config.RepeaterCall3);
-    	var rptrStr3 = "<tr><td><a href='" 
-    		+ gmap(config.latitude3,config.longitude3) 
-    		+ "' target='map'>" 
-    		+ rptrCall3 + "</a></td><td>" 
-    		+ config.repeaterBand3 
-    		+ "</td><td>" 
-    		+ config.frequency3 
-    		+ "</td><td>" 
-    		+ config.offset3 
-    		+ "</td><td>" 
-    		+ config.rangeKms3 
-    		+ "</td><td>"
-    		+ config.description3_1
-    		+ "</td><td>"
-    		+ config.description3_2      		
-    		+ "</td></tr>"
-    	$('#rptrs tbody').append(rptrStr3);
-   }
-
-    if (! (typeof config.repeaterBand4 === "undefined")) {
-    	var rptrCall4 = checkRptCall(config.gatewayCallsign,config.RepeaterCall4);
-   	var rptrStr4 = "<tr><td><a href='" 
-    		+ gmap(config.latitude4,config.longitude4) 
-    		+ "' target='map'>" 
-    		+ rptrCall4 + "</a></td><td>" 
-    		+ config.repeaterBand4 
-    		+ "</td><td>" 
-    		+ config.frequency4 
-    		+ "</td><td>" 
-    		+ config.offset4 
-    		+ "</td><td>" 
-    		+ config.rangeKms4 
-    		+ "</td><td>"
-    		+ config.description4_1
-    		+ "</td><td>"
-    		+ config.description4_2  
-    		+ "</td></tr>"
-    	$('#rptrs tbody').append(rptrStr4);
-    }
-
-  });
-  
-  
-  socket.on('stats', function(stats) {
-    $('#stats tbody').remove();
-    $('#stats').append('<tbody></tbody>');
-    var entry = "<tr><th>Uptime (Days HH:MM:SS)</th><td>" + stats.uptime + "</td>\n" +
-	"<tr><th>Load Average</th><td>" + stats.loadavg + "</td>\n";
-	if (stats.cputemp)
-	{
-		entry += "<tr><th>CPU Temperature</th><td>" + stats.cputemp + "</td>\n";
+	var sngroups = [];
+	var socket = io.connect(location.origin);
+	var lr = 0;
+	var rr = 0;
+	function gmap(lat, long) {
+		return 'http://maps.google.com/maps?q=' + lat + ',' + long;
 	}
-	entry += "</tr>\n";
-    $('#stats tbody').append(entry);
-    // console.log(stats);
-  });
 
-  socket.on('links', function(links) {
-    $('#links tbody').remove();
-    $('#links').append('<tbody></tbody>'); 	
-  	links.forEach(function (link) {
-    	var mydate = new Date(link.date + "T" + link.time);
-    	var ldate = myDate(link.date,link.time);
-    	var entry = "<tr><td>" + ldate + "</td><td>" + link.direction
-    		+ "</td><td>" + link.source + "</td><td>" + link.type + "</td>";
-    			
-  		if ("user" in link) {
-  			entry += "<td>" + link.user + "</td><td></td>";
-  		} else {
-  			entry += "<td>" + link.repeater + "</td><td>" + link.reflector + "</td>";
-  		}
-  		entry += "</tr>";
-  		$("#links tbody").append(entry);
-  	});
-    console.log("Links: \n" + JSON.stringify(links) + "\n\n");
-  });
+	function myDate(date, time) {
+		var dtx = date.split('-');
+		var ttx = time.split(':');
+		var dt = new Date();
+		dt.setUTCFullYear(dtx[0]);
+		dt.setUTCMonth(dtx[1] - 1); // Months start at 0
+		dt.setUTCDate(dtx[2]);
+		dt.setUTCHours(ttx[0]);
+		dt.setUTCMinutes(ttx[1]);
+		dt.setUTCSeconds(ttx[2]);
+		dt.setUTCMilliseconds(0);
+		return dt.toLocaleString();
+	}
 
-  socket.on('header', function (data) {
-    console.log("Incoming header: \n" + JSON.stringify(data) + "\n\n");
+	function checkRptCall(gw, rpt) {
+		var call;
+		if (typeof rpt === "undefined") {
+			return gw;
+		} else {
+			return (rpt.length < 1) ? gw : rpt;
+		}
+	}
 
+	socket
+			.on(
+					'config',
+					function(config) {
 
-    var mydate = new Date(data.date + "T" + data.time);
-    var ldate = myDate(data.date,data.time);
-    var newrec = "<tr><td>" 
-    	+ ldate + "</td><td>"
-    	+ data.source + "</td><td>"
-    	+ data.mycall + "/" + data.comment1 + "</td><td>"
-    	+ data.urcall + "</td><td>"
-    	+ data.rpt1 + "</td><td>"
-    	+ data.rpt2 + "</td></tr>";
-    
-    if (data.source === "Repeater") {    	
-   		 	if (++rr > 10) {
-    			$("#repeater tbody tr:first").remove();
-    		}
-    		$("#repeater tbody").append(newrec);
-    } else {
-    	  	if (++lr > 10) {
-    			$("#network tbody tr:first").remove();
-    		}
-    		$("#network tbody").append(newrec);
-    }
-    	
-//    socket.emit('my other event', { my: data });
-  });
+						console.log(JSON.stringify(config));
+						document.title = config.gatewayCallsign + " Dashboard";
+						$("#gatewayCALL").text(
+								config.gatewayCallsign + " Gateway Dashboard");
+						$("#status tbody").remove();
+						$("#status").append("<tbody></tbody>");
+						if (config.ircddbEnabled) {
+							$("#status tbody").append(
+									"<tr><th>ircDDB Host</th><td>"
+											+ config.ircddbHostname
+											+ "</td></tr>");
+						}
+						if (config.ircddbEnabled2) {
+							$("#status tbody").append(
+									"<tr><th>ircDDB Host 2</th><td>"
+											+ config.ircddbHostname2
+											+ "</td></tr>");
+						}
+						if (config.ircddbEnabled3) {
+							$("#status tbody").append(
+									"<tr><th>ircDDB Host 3</th><td>"
+											+ config.ircddbHostname3
+											+ "</td></tr>");
+						}
+						if (config.ircddbEnabled4) {
+							$("#status tbody").append(
+									"<tr><th>ircDDB Host 4</th><td>"
+											+ config.ircddbHostname4
+											+ "</td></tr>");
+						}
+						if (config.aprsEnabled) {
+							$("#status tbody").append(
+									"<tr><th>APRS Host</th><td>"
+											+ config.aprsHostname
+											+ "</td></tr>");
+						}
+						if (config.ccsEnabled) {
+							$("#status tbody").append(
+									"<tr><th>CCS Host</th><td>"
+											+ config.ccsHost + "</td></tr>");
+						}
+						var linkTypes = "";
+						if (config.ccsEnabled === "1") {
+							linkTypes += "CCS ";
+						}
+						if (config.dcsEnabled === "1") {
+							linkTypes += "DCS ";
+						}
+						if (config.dextraEnabled === "1") {
+							linkTypes += "DExtra/XRF("
+									+ config.dextraMaxDongles
+									+ " Max Dongles) ";
+						}
+						if (config.dextraEnabled === "1") {
+							linkTypes += "DPlus/REF(" + config.dplusMaxDongles
+									+ " Max Dongles) ";
+						}
+						if (config.dratsEnabled === "1") {
+							linkTypes += "DRATS ";
+						}
+						if (config.dtmfEnabled === "1") {
+							linkTypes += "DTMF ";
+						}
+						if (config.echoEnabled === "1") {
+							linkTypes += "ECHO ";
+						}
+						if (config.infoEnabled === "1") {
+							linkTypes += "INFO ";
+						}
+						$('#linking p').remove();
+						$('#linking').append('<p>' + linkTypes + '</p>');
+
+						$('#rptrs tbody').remove();
+						$('#rptrs').append('<tbody></tbody>');
+						if (!(typeof config.repeaterBand1 === "undefined1")) {
+							var rptrCall1 = checkRptCall(
+									config.gatewayCallsign,
+									config.RepeaterCall1);
+							var rptrStr1 = "<tr><td><a href='"
+									+ gmap(config.latitude1, config.longitude)
+									+ "' target='map'>" + rptrCall1
+									+ "</a></td><td>" + config.repeaterBand1
+									+ "</td><td>" + config.frequency1
+									+ "</td><td>" + config.offset1
+									+ "</td><td>" + config.rangeKms1
+									+ "</td><td>" + config.description1_1
+									+ "</td><td>" + config.description1_2
+									+ "</td></tr>"
+							$('#rptrs tbody').append(rptrStr1);
+						}
+
+						if (!(typeof config.repeaterBand2 === "undefined")) {
+							var rptrCall2 = checkRptCall(
+									config.gatewayCallsign,
+									config.RepeaterCall2);
+							var rptrStr2 = "<tr><td><a href='"
+									+ gmap(config.latitude2, config.longitude2)
+									+ "' target='map'>" + rptrCall2
+									+ "</a></td><td>" + config.repeaterBand2
+									+ "</td><td>" + config.frequency2
+									+ "</td><td>" + config.offset2
+									+ "</td><td>" + config.rangeKms2
+									+ "</td><td>" + config.description2_1
+									+ "</td><td>" + config.description2_2
+									+ "</td></tr>"
+							$('#rptrs tbody').append(rptrStr2);
+						}
+
+						if (!(typeof config.repeaterBand3 === "undefined")) {
+							var rptrCall3 = checkRptCall(
+									config.gatewayCallsign,
+									config.RepeaterCall3);
+							var rptrStr3 = "<tr><td><a href='"
+									+ gmap(config.latitude3, config.longitude3)
+									+ "' target='map'>" + rptrCall3
+									+ "</a></td><td>" + config.repeaterBand3
+									+ "</td><td>" + config.frequency3
+									+ "</td><td>" + config.offset3
+									+ "</td><td>" + config.rangeKms3
+									+ "</td><td>" + config.description3_1
+									+ "</td><td>" + config.description3_2
+									+ "</td></tr>"
+							$('#rptrs tbody').append(rptrStr3);
+						}
+
+						if (!(typeof config.repeaterBand4 === "undefined")) {
+							var rptrCall4 = checkRptCall(
+									config.gatewayCallsign,
+									config.RepeaterCall4);
+							var rptrStr4 = "<tr><td><a href='"
+									+ gmap(config.latitude4, config.longitude4)
+									+ "' target='map'>" + rptrCall4
+									+ "</a></td><td>" + config.repeaterBand4
+									+ "</td><td>" + config.frequency4
+									+ "</td><td>" + config.offset4
+									+ "</td><td>" + config.rangeKms4
+									+ "</td><td>" + config.description4_1
+									+ "</td><td>" + config.description4_2
+									+ "</td></tr>"
+							$('#rptrs tbody').append(rptrStr4);
+						}
+						for (var c = 1; c < 6; c++) {
+							var sncall = config["starNetCallsign" + c].trim();
+
+							if (sncall.length > 0) {
+								sngroups.push(sncall);
+								var dcall = config["starNetLogoff" + c].trim();
+								var dinfo = config["starNetInfo" + c].trim();
+								var dmem = config["starNetPermanent" + c]
+										.trim();
+								var dref = config["starNetReflector" + c]
+										.trim();
+								var dentry = "<div style='float:left;margin-right:2em'><h3>STARnet Digital Group "
+										+ sncall + "</h3>\n";
+								if (dinfo.length > 0)
+									dentry += "<h4>" + dinfo + "</h4>\n";
+								dentry += "<div>Connect: " + sncall;
+								if (dcall.length > 0)
+									dentry += " Disconnect: " + dcall;
+								if (dref.length > 0)
+									dentry += " Linked Reflector: " + dref;
+								dentry += "</div>";
+								if (dmem.length > 0)
+									dentry += "<div>Permanent Members: " + dmem
+											+ "</div>\n";
+								dentry += '<table id="' + sncall + '" class="pure-table pure-table-bordered">';
+								dentry += '<thead><tr><th>Callsign</th><th>Local Join Time</th></tr></thead>';
+								dentry += '<tbody/></table></div>';
+								$('#starnetgroups').append(dentry);
+							}
+
+						}
+						console.log(sngroups);
+					});
+
+	socket.on('stats', function(stats) {
+		$('#stats tbody').remove();
+		$('#stats').append('<tbody></tbody>');
+		var entry = "<tr><th>Uptime (Days HH:MM:SS)</th><td>" + stats.uptime
+				+ "</td>\n" + "<tr><th>Load Average</th><td>" + stats.loadavg
+				+ "</td>\n";
+		if (stats.cputemp) {
+			entry += "<tr><th>CPU Temperature</th><td>" + stats.cputemp
+					+ "</td>\n";
+		}
+		entry += "</tr>\n";
+		$('#stats tbody').append(entry);
+		// console.log(stats);
+	});
+
+	socket.on('links', function(links) {
+		$('#links tbody').remove();
+		$('#links').append('<tbody></tbody>');
+		links.forEach(function(link) {
+			var mydate = new Date(link.date + "T" + link.time);
+			var ldate = myDate(link.date, link.time);
+			var entry = "<tr><td>" + ldate + "</td><td>" + link.direction
+					+ "</td><td>" + link.source + "</td><td>" + link.type
+					+ "</td>";
+
+			if ("user" in link) {
+				entry += "<td>" + link.user + "</td><td></td>";
+			} else {
+				entry += "<td>" + link.repeater + "</td><td>" + link.reflector
+						+ "</td>";
+			}
+			entry += "</tr>";
+			$("#links tbody").append(entry);
+		});
+		console.log("Links: \n" + JSON.stringify(links) + "\n\n");
+	});
+
+	socket.on('starnet', function(data) {
+		console.log("Incoming STARnet: \n" + JSON.stringify(data) + "\n\n");
+		for (var p = 0; p < sngroups.length; p++) {
+			var gname = "#" + sngroups[p] + " tbody";
+			console.log(gname);
+			$(gname).empty();
+		}
+		data.forEach(function(rec) {
+			var mydate = new Date(rec.date + "T" + rec.time);
+			var ldate = myDate(rec.date, rec.time);
+			var tbod = "#" + rec.group + " tbody";
+			$(tbod).append(
+					"<tr><td>" + rec.callsign + "</td><td>" + ldate
+							+ "</td></tr>\n");
+		});
+	});
+
+	socket.on('header', function(data) {
+		console.log("Incoming header: \n" + JSON.stringify(data) + "\n\n");
+
+		var mydate = new Date(data.date + "T" + data.time);
+		var ldate = myDate(data.date, data.time);
+		var newrec = "<tr><td>" + ldate + "</td><td>" + data.source
+				+ "</td><td>" + data.mycall + "/" + data.comment1 + "</td><td>"
+				+ data.urcall + "</td><td>" + data.rpt1 + "</td><td>"
+				+ data.rpt2 + "</td></tr>";
+
+		if (data.source === "Repeater") {
+			if (++rr > 10) {
+				$("#repeater tbody tr:first").remove();
+			}
+			$("#repeater tbody").append(newrec);
+		} else {
+			if (++lr > 10) {
+				$("#network tbody tr:first").remove();
+			}
+			$("#network tbody").append(newrec);
+		}
+
+		//    socket.emit('my other event', { my: data });
+	});
 </script>
 </head>
 <body style="padding: 1 em;">
@@ -248,7 +329,10 @@
 				<tbody>
 				</tbody>
 			</table>
-			<div id="linking"><h3>Supported Services and Commands</h3><p></p></div>
+			<div id="linking">
+				<h3>Supported Services and Commands</h3>
+				<p></p>
+			</div>
 		</div>
 		<div class="pure-u-1">
 			<h3>RF Activity</h3>
@@ -301,6 +385,7 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="pure-u-1" id="starnetgroups"></div>
 		<div class="pure-u-1">
 			<h3>Reporting Servers</h3>
 			<table id="status" class="pure-table pure-table-bordered">
