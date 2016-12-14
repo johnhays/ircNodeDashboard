@@ -22,7 +22,7 @@ var starNetLog = '/var/log/opendv/STARnet.log';
 
 app.use(express.static(__dirname + '/public'));
 app.set('port', '80');
-app.set('host', '::'); // Set to '::' to include IPv6 or set to specific
+app.set('host', ''); // Set to '::' to include IPv6 or set to specific
 						// address if not wanted on all interfaces
 
 var remove = [ 'ircddbUsername', 'ircddbPassword', 'remotePassword',
