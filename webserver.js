@@ -21,7 +21,7 @@ var headers = '/var/log/opendv/Headers.log';
 var starNetLog = '/var/log/opendv/STARnet.log';
 
 app.use(express.static(__dirname + '/public'));
-var port = normalizePort(process.env.PORT || '80');
+var port = process.env.PORT || '80';
 app.set('port', port);
 app.set('host', ''); // Set to '::' to include IPv6 or set to specific
 						// address if not wanted on all interfaces
