@@ -5,6 +5,15 @@ ircDDBGateway “Node” Dashboard
 
 **Tested on Compass Linux [http://archive.compasslinux.org/images](http://archive.compasslinux.org/images) using a Raspberry Pi. Code changes may be necessary for other distributions,**
 
+On Raspbian and Compass the Node.js install is old, newer versions of some included libraries require a more modern Node.js  after installing npm, you can install the latest stable with:
+
+npm cache clean -f
+sudo npm install -g n
+sudo n stable
+node --version
+
+This new version does not replace the current version, but is installed in /usr/local/bin 
+
 For **non-Raspberry Pi** installs, follow the directions here, then use [these directions](./HowToInstall_lm-sensors.md) to update the webserver.js
 
 IrcDDBGateway node dashboard is a lightweight, real-time, self configuring dashboard for G4KLX's D-STAR gateway. Both the server and client are written in JavaScript.
