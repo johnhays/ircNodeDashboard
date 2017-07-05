@@ -8,13 +8,9 @@ ircDDBGateway “Node” Dashboard
 
 On Raspbian and Compass the Node.js install is old, newer versions of some included libraries require a more modern Node.js  after installing npm, you can install the latest stable with:
 
-npm cache clean -f
+**curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 
-sudo npm install -g n
-
-sudo n stable
-
-node --version
+sudo apt-get install -y nodejs**
 
 This new version does not replace the current version, but is installed in /usr/local/bin 
 
