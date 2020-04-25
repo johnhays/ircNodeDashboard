@@ -4,10 +4,12 @@ ircDDBGateway “Node” Dashboard
 
 **These instructions are meant as a general guide for setup. Familiarity with Linux commands, administration and troubleshooting are recommended.**
 
-**Tested on Compass Linux [http://archive.compasslinux.org/images](http://archive.compasslinux.org/images) using a Raspberry Pi. Code changes may be necessary for other distributions,**
+**Tested on Raspbian Linux using a Raspberry Pi. Code changes may be necessary for other distributions,**
 
-On Raspbian and Compass the Node.js install is old, newer versions of some included libraries require a more modern Node.js  after installing npm, you can install the latest stable with:
+On Raspbian the Node.js install is old, newer versions of some included libraries require a more modern Node.js  after installing npm, you can install the latest stable with:
 
+Check https://github.com/nodesource/distributions/tree/master/deb for latest.
+Example:
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 
 sudo apt-get install -y nodejs
