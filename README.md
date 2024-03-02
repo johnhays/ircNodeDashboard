@@ -2,6 +2,10 @@
 ircDDBGateway “Node” Dashboard
 ==============================
 
+**This project is no longer maintained and is deprecated, I am now suggesting https://github.com/F4FXL/DStarGateway as the gateway software and https://github.com/johnhays/dsgwdashboard for a dashboard**
+
+
+
 **These instructions are meant as a general guide for setup. Familiarity with Linux commands, administration and troubleshooting are recommended.**
 
 **Tested on Raspbian Linux using a Raspberry Pi. Code changes may be necessary for other distributions,**
